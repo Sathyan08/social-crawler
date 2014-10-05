@@ -29,6 +29,15 @@ gem 'spring',        group: :development
 
 group :development, :test do
   gem 'dotenv-rails'
+  gem 'capybara'
+  gem 'factory_girl_rails'
+  gem 'launchy'
+  gem 'pry-rails'
+  gem 'quiet_assets'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
+  gem 'valid_attribute'
+  gem 'guard'
 end
 
 # Use ActiveModel has_secure_password
