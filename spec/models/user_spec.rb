@@ -6,4 +6,3 @@ describe User do
   it { should have_many(:repositories) }
 
 end
-
