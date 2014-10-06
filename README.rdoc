@@ -22,6 +22,8 @@ The algorithim places more weight on a technically proficient user's reviews for
        Repos
        Collaborations
 
+       -DONE!
+
     C. Use Github API to Find a User's Repos and Collaborations
 
     D. Html and Controller to See Data
