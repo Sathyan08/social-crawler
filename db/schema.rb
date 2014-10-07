@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 20141006190249) do
 
   create_table "repositories", force: true do |t|
     t.string   "name",       null: false
+    t.string   "full_name",  null: false
+    t.integer  "rid",        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -33,9 +35,9 @@ ActiveRecord::Schema.define(version: 20141006190249) do
     t.string   "provider",   null: false
     t.string   "uid",        null: false
     t.string   "name",       null: false
+    t.string   "gitname",    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "gitname"
   end
 
 end

@@ -3,7 +3,6 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     repos = client.user("#{@user.gitname}").rels[:repos].get.data
-    # repos = data_total.rels[:repos].get.data
 
     repo_names = []
     collaborators_data = []
@@ -19,7 +18,5 @@ class UsersController < ApplicationController
 
     @repo_names = repo_names
     @collaborator_names = collaborators_names.uniq!
-    binding.pry
-
   end
 end
