@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20141006190249) do
   create_table "users", force: true do |t|
     t.string   "provider",   null: false
     t.string   "uid",        null: false
-    t.string   "name",       null: false
+    t.string   "name"
     t.string   "gitname",    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
