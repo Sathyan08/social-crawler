@@ -5,7 +5,6 @@ gem 'rails', '4.1.6'
 
 gem "octokit", "~> 3.0"
 
-gem 'foundation-rails'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets

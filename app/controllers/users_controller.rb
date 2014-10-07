@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    data_total = Octokit.user "#{current_user.gitname}"
+    data_total = client.user "#{@user.gitname}"
     repos = data_total.rels[:repos].get.data
 
     repo_names = []

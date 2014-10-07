@@ -10,4 +10,9 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
+
+  def client
+    Octokit::Client.new(client_id: ENV["GITHUB_KEY"], client_secret: ENV["GITHUB_SECRET"])
+  end
+
 end
