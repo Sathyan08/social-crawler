@@ -1,3 +1,13 @@
 <p>Collaborators: <%= @collaborator_names %></p>
-<p>Repos: <%= @repo_names %></p>
+Repos:
+
+<ul>
+  <% @user.repositories.each do |repo| %>
+    <li><%= repo.name %></li>
+  <% end %>
+</ul>
+
+<% if current_user.id == @user.id %>
+  <p>Sync Data</p>
+<% end %>
 

@@ -1,11 +1,6 @@
 class UsersController < ApplicationController
 
   def show
-  end
-
-  private
-
-  def sync
     @user = User.find(params[:id])
     repos = client.user("#{@user.gitname}").rels[:repos].get.data
 
@@ -39,8 +34,9 @@ class UsersController < ApplicationController
         end
 
         new_collaboration = Collaboration.find_or_initialize_by(
-          repository_id: repo[:id],
-          user_id: collaborator[:id])
+          repository_id: Repository.find_by(rid: repo[:id]).id,
+          user_id: User.find_by(uid: collaborator[:id].to_s).id
+          )
         if new_collaboration.save
           puts "collaboration saved"
         end
@@ -49,5 +45,12 @@ class UsersController < ApplicationController
 
     @repo_names = repo_names
     @collaborator_names = collaborators_names.uniq!
+
+  end
+
+  private
+
+  def sync
+
   end
 end
