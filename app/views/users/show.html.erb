@@ -4,7 +4,14 @@
 <ol>
   <% @user.collaborators.each do |col| %>
     <li>
-      <%= link_to col.gitname, user_path(col) %>
+      <%= link_to col.gitname, user_path(col) %>, Average Score:
+      <% if col.reviews_received.count != 0%>
+        <%= col.average_score %>
+      <% else %>
+        <span>No Reviews Yet!</span>
+      <% end %>
+      , Number of Reviews: <%= col.reviews_received.count %>
+
       <% if @user == current_user %>
         <%= simple_form_for [col, current_user.review_for(col)] do |f| %>
           <%= f.input :score, :collection => 1..5 %>

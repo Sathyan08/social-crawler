@@ -22,7 +22,12 @@ class User < ActiveRecord::Base
   end
 
   def average_score
-    reviews_received.sum(:score)/reviews_received.count
+
+    if reviews_received.count != 0
+      reviews_received.sum(:score).to_f/reviews_received.count
+    else
+      nil
+    end
   end
 
   def collaborators
