@@ -2,6 +2,12 @@ class User < ActiveRecord::Base
   has_many :collaborations
   has_many :repositories, through: :collaborations
 
+  has_many :reviews
+  has_many :reviewees, through: :reviews
+
+  has_many :inverse_reviews, class_name: :review, foreign_key: :reviewee_id
+  has_many :reviewerers, through: :inverse_reviews, source: :user
+
   def self.create_with_omniauth(auth)
     create! do |user|
       user.provider = auth["provider"]
