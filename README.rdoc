@@ -25,10 +25,13 @@ The algorithim places more weight on a technically proficient user's reviews for
        -DONE!
 
     C. Use Github API to Find a User's Repos and Collaborations
+      -DONE!
 
     D. Html and Controller to See Data
+      -DONE!
 
   Second Milestone - Can Review
+    -DONE!
 
   Third Milestone - Add Weights
 
