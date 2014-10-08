@@ -10,4 +10,18 @@ class User < ActiveRecord::Base
       user.gitname = auth["info"]["nickname"]
     end
   end
+
+  def collaborators
+    collaborators = []
+
+    repositories.each do |repo|
+      repo.users.each do |user|
+        if user.uid != self.uid
+          collaborators << user
+        end
+      end
+    end
+
+    collaborators.uniq
+  end
 end

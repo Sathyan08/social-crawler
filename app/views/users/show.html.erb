@@ -1,11 +1,21 @@
-<p>Collaborators: <%= @collaborator_names %></p>
+<h1><%= @user.gitname %></h1>
+
+<p>Collaborators:</p>
+<ol>
+  <% @user.collaborators.each do |collaborator| %>
+    <li><%= link_to collaborator.gitname, user_path(collaborator) %></li>
+  <% end %>
+</ol>
+
+
+
 Repos:
 
-<ul>
+<ol>
   <% @user.repositories.each do |repo| %>
     <li><%= repo.name %></li>
   <% end %>
-</ul>
+</ol>
 
 <% if current_user.id == @user.id %>
   <p>Sync Data</p>

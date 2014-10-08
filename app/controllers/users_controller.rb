@@ -2,11 +2,18 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    repos = client.user("#{@user.gitname}").rels[:repos].get.data
 
-    repo_names = []
-    collaborators_data = []
-    collaborators_names = []
+    unless @user.synced
+      sync(@user)
+      @user.synced = true
+      @user.save
+    end
+  end
+
+  private
+
+  def sync(user)
+    repos = client.user("#{user.gitname}").rels[:repos].get.data
 
     repos.each do |repo|
 
@@ -18,11 +25,11 @@ class UsersController < ApplicationController
         puts "#{new_repo} saved"
       end
 
-      repo_names << repo["name"]
       repo_collaborators = repo.rels[:collaborators].get.data
       repo_collaborators.each do |collaborator|
+
         if collaborator[:id] != @user.uid
-          collaborators_names << collaborator[:login]
+
           new_user = User.find_or_initialize_by(uid: collaborator[:id].to_s)
           new_user.gitname = collaborator[:login]
           new_user.provider = "github"
@@ -40,17 +47,8 @@ class UsersController < ApplicationController
         if new_collaboration.save
           puts "collaboration saved"
         end
+        @user.synced = true
       end
     end
-
-    @repo_names = repo_names
-    @collaborator_names = collaborators_names.uniq!
-
-  end
-
-  private
-
-  def sync
-
   end
 end
