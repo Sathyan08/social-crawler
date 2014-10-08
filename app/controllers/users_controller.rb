@@ -12,6 +12,7 @@ class UsersController < ApplicationController
 
   private
 
+
   def sync(user)
     repos = client.user("#{user.gitname}").rels[:repos].get.data
 

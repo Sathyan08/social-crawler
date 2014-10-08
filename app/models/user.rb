@@ -2,11 +2,11 @@ class User < ActiveRecord::Base
   has_many :collaborations
   has_many :repositories, through: :collaborations
 
-  has_many :reviews
-  has_many :reviewees, through: :reviews
+  has_many :reviews_written, class_name: "Review", foreign_key: :user_id
+  has_many :reviewees, through: :reviews_written, source: :reviewee
 
-  has_many :inverse_reviews, class_name: :review, foreign_key: :reviewee_id
-  has_many :reviewerers, through: :inverse_reviews, source: :user
+  has_many :reviews_received, class_name: "Review", foreign_key: :reviewee_id#, class_name: :review, foreign_key: :reviewee_id
+  has_many :reviewers, through: :reviews_received, source: :user
 
   def self.create_with_omniauth(auth)
     create! do |user|
@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
       user.name = auth["info"]["name"]
       user.gitname = auth["info"]["nickname"]
     end
+  end
+
+  def review_for(other_user)
+    Review.find_by(reviewee: other_user) || Review.new
   end
 
   def collaborators

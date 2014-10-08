@@ -2,8 +2,14 @@
 
 <p>Collaborators:</p>
 <ol>
-  <% @user.collaborators.each do |collaborator| %>
-    <li><%= link_to collaborator.gitname, user_path(collaborator) %></li>
+  <% @user.collaborators.each do |col| %>
+    <li>
+      <%= link_to col.gitname, user_path(col) %>|
+      <%= if @user = current_user %>
+        <%= simple_for_for [col, current_user.review_for(col)] do |f| %>
+          <%= f.input :rating, :collection => 1..5, :as => :radio %>
+        <% end %>
+    </li>
   <% end %>
 </ol>
 
