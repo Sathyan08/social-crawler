@@ -18,7 +18,11 @@ class User < ActiveRecord::Base
   end
 
   def review_for(other_user)
-    Review.find_by(reviewee: other_user) || Review.new
+    reviews_written.find_by(reviewee: other_user) || Review.new
+  end
+
+  def average_score
+    reviews_received.sum(:score)/reviews_received.count
   end
 
   def collaborators

@@ -4,12 +4,22 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params)
     @review.user = current_user
     @review.reviewee = User.find(params[:user_id])
-    @review.type = "Ruby"
+    @review.category = "Ruby"
 
     if @review.save
       redirect_to current_user, notice: "Review Saved!"
     else
       redirect_to current_user, notice: "Review Not Saved! Please Resubmit"
+    end
+  end
+
+  def update
+    @review = Review.find_by(reviewee_id: params[:user_id])
+
+    if @review.update(review_params)
+      redirect_to current_user, notice: "Successfully Updated Review"
+    else
+      redirect_to current_user, notice: "Review Not Updated! Please Resubmit."
     end
   end
 
