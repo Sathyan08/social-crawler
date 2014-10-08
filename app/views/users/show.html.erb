@@ -4,11 +4,13 @@
 <ol>
   <% @user.collaborators.each do |col| %>
     <li>
-      <%= link_to col.gitname, user_path(col) %>|
-      <%= if @user = current_user %>
-        <%= simple_for_for [col, current_user.review_for(col)] do |f| %>
-          <%= f.input :rating, :collection => 1..5, :as => :radio %>
+      <%= link_to col.gitname, user_path(col) %>
+      <% if @user == current_user %>
+        <%= simple_form_for [col, current_user.review_for(col)] do |f| %>
+          <%= f.input :score, :collection => 1..5 %>
+          <%= f.button :submit %>
         <% end %>
+      <% end %>
     </li>
   <% end %>
 </ol>
