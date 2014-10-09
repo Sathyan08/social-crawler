@@ -1,18 +1,25 @@
-<%= image_tag @user.git_avatar %>
-
-<h1><%= @user.gitname %></h1>
+<h1>
+  <% unless @user.git_avatar.nil? %>
+    <%= image_tag @user.git_avatar, height: '64', width: '64' %>
+  <% end %>
+  <%= @user.gitname %>
+</h1>
 
 <h3>Collaborators:</h3>
 <ol>
   <% @user.collaborators.each do |col| %>
     <li>
-      <%= link_to col.gitname, user_path(col) %>, Average Score:
+      <% unless col.git_avatar.nil?%>
+        <%= image_tag col.git_avatar, height: '64', width: '64' %><br>
+      <% end %>
+      <%= link_to col.gitname, user_path(col) %><br>
+      Average Score:
       <% if col.reviews_received.count != 0%>
         <%= col.average_score %>
       <% else %>
         <span>No Reviews Yet!</span>
-      <% end %>
-      , Number of Reviews: <%= col.reviews_received.count %>
+      <% end %><br>
+      Number of Reviews: <%= col.reviews_received.count %>
 
       <% if @user == current_user %>
         <%= simple_form_for [col, current_user.review_for(col)] do |f| %>
