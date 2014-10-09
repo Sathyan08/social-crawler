@@ -15,7 +15,7 @@
       <% if @user == current_user %>
         <%= simple_form_for [col, current_user.review_for(col)] do |f| %>
           <%= f.input :score, :collection => 1..5 %>
-          <%= f.button :submit %>
+          <%= f.button :submit, class: "button radius" %>
         <% end %>
       <% end %>
     </li>
