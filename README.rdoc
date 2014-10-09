@@ -33,5 +33,18 @@ The algorithim places more weight on a technically proficient user's reviews for
   Second Milestone - Can Review
     -DONE!
 
-  Third Milestone - Add Weights
+  Secret Milestone! - Styling
+
+  Third Milestone - Add Weights for users
+
+  Fourth Mileston - Fix Data Collection Algorithim
+
+    - use subscriptions to get watched repos
+    - use starred to get all repos starred
+    - use orgs and org repos to get all repos for user's orgs
+
+  Fifth Milestone(Week 2)
+
+
+
 
