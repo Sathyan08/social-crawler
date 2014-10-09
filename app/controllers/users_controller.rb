@@ -18,9 +18,12 @@ class UsersController < ApplicationController
 
     repos.each do |repo|
 
+      new_category = Category.find_or_initialize_by(name: repo[:language])
+
       new_repo = Repository.find_or_initialize_by(rid: repo[:id])
       new_repo.name = repo[:name]
       new_repo.full_name = repo[:full_name]
+      new_repo.category = new_category
 
       if new_repo.save
         puts "#{new_repo} saved"
