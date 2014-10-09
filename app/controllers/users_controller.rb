@@ -15,10 +15,14 @@ class UsersController < ApplicationController
 
   def sync(user)
 
-    repos_owned = client.user("#{user.gitname}").rels[:repos].get.data
-    repos_orgs  = client.user("#{user.gitname}").rels[:organizations].rels[:repositories].get.data
+    git_user = client.user("#{user.gitname}")
+    repos_owned = git_user.rels[:repos].get.data
+    user_orgs  = git_user.rels[:organizations].get.data
 
-    repos = repos_owned + repos_orgs
+
+    org_repos = []
+
+    repos = repos_owned + org_repos
 
     repos.each do |repo|
 
