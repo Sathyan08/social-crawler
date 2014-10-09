@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141009195701) do
+ActiveRecord::Schema.define(version: 20141009223021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: true do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "collaborations", force: true do |t|
     t.integer  "user_id",       null: false
@@ -24,11 +30,12 @@ ActiveRecord::Schema.define(version: 20141009195701) do
   end
 
   create_table "repositories", force: true do |t|
-    t.string   "name",       null: false
-    t.string   "full_name",  null: false
-    t.integer  "rid",        null: false
+    t.string   "name",        null: false
+    t.string   "full_name",   null: false
+    t.integer  "rid",         null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "category_id", null: false
   end
 
   create_table "reviews", force: true do |t|

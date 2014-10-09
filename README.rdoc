@@ -34,6 +34,7 @@ The algorithim places more weight on a technically proficient user's reviews for
     -DONE!
 
   Secret Milestone! - Styling
+    -DONE!
 
   Third Milestone - Add Weights for users
 
