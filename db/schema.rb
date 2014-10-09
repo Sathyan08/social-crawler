@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20141009223021) do
     t.integer  "rid",         null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "category_id", null: false
+    t.integer  "category_id"
   end
 
   create_table "reviews", force: true do |t|
