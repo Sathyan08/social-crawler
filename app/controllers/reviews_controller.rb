@@ -4,7 +4,7 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params)
     @review.user = current_user
     @review.reviewee = User.find(params[:user_id])
-    @review.category = "Ruby"
+    @review.category = "1"
 
     if @review.save
       redirect_to current_user, notice: "Review Saved!"
