@@ -35,6 +35,7 @@ class UsersController < ApplicationController
           new_user.gitname = collaborator[:login]
           new_user.provider = "github"
           new_user.name = collaborator[:name]
+          new_user.git_avatar = collaborator[:avatar_url]
 
           if new_user.save
             puts "#{new_user.name} saved"
