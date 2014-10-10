@@ -12,7 +12,6 @@ class UsersController < ApplicationController
     lang_objects = get_language_objects(@user)
     language_hashes = get_language_hashes(lang_objects)
     language_total = get_master_language_hash(language_hashes)
-    binding.pry
     gon.languages = language_total
 
   end

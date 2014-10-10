@@ -5,7 +5,7 @@
   <%= @user.gitname %>
 </h1>
 
-<h3>Collaborators:</h3>
+<h3>Collaborators</h3>
 <ol>
   <% @user.collaborators.each do |col| %>
     <li>
@@ -32,16 +32,17 @@
 </ol>
 
 
+<% if @users.higlighted.length > 0 %>
+  <h1>Highlighted Repos</h1>
 
-Repos:
+    <ol>
+      <% @user.repositories.each do |repo| %>
+        <li><%= repo.name %></li>
+      <% end %>
+    </ol>
 
-<ol>
-  <% @user.repositories.each do |repo| %>
-    <li><%= repo.name %></li>
-  <% end %>
-</ol>
-
-<% if current_user.id == @user.id %>
-  <p>Sync Data</p>
+    <% if current_user.id == @user.id %>
+      <p>Sync Data</p>
+    <% end %>
 <% end %>
 
