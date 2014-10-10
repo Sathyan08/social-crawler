@@ -32,17 +32,13 @@
 </ol>
 
 
-<% if @users.higlighted.length > 0 %>
+<% if @user.highlighted_repos.length > 0 %>
   <h1>Highlighted Repos</h1>
 
     <ol>
-      <% @user.repositories.each do |repo| %>
+      <% @user.highlighted_repos.each do |repo| %>
         <li><%= repo.name %></li>
       <% end %>
     </ol>
-
-    <% if current_user.id == @user.id %>
-      <p>Sync Data</p>
-    <% end %>
 <% end %>
 

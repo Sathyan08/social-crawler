@@ -23,6 +23,18 @@ class User < ActiveRecord::Base
     reviews_written.find_by(reviewee: other_user) || Review.new
   end
 
+  def highlighted_repos
+    highlighted_repos = []
+
+    repositories.each do |repo|
+      if repo.highlighted
+        highlighted_repos << repo
+      end
+    end
+
+    highlighted_repos
+  end
+
   def average_score
 
     if reviews_received.count != 0
