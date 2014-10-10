@@ -9,6 +9,12 @@ class UsersController < ApplicationController
       @user.save
     end
 
+    lang_objects = get_language_objects(@user)
+    language_hashes = get_language_hashes(lang_objects)
+    language_total = get_master_language_hash(language_hashes)
+    binding.pry
+    gon.languages = language_total
+
   end
 
   private
@@ -54,4 +60,39 @@ class UsersController < ApplicationController
       end
     end
   end
+
+  def get_language_objects(user)
+    language_objects = []
+
+    user.repositories.each do |repo|
+      language_objects << client.repository("#{repo.full_name}").rels[:languages].get.data
+    end
+
+    language_objects
+  end
+
+  def get_language_hashes(lang_objects)
+    language_data = []
+
+    lang_objects.each do |lang|
+      language_data << lang.as_json
+    end
+  end
+
+  def get_master_language_hash(language_hashes)
+    languages_total = {}
+
+    language_hashes.each do |language_hash|
+      language_hash.as_json.each do |lang, count|
+        if languages_total[lang].nil?
+          languages_total[lang] = count
+        else
+          languages_total[lang] += count
+        end
+      end
+    end
+
+    languages_total
+  end
+
 end
