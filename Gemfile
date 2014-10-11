@@ -11,6 +11,8 @@ gem "foundation-rails"
 
 gem "gon"
 
+gem 'd3js-rails'
+
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
