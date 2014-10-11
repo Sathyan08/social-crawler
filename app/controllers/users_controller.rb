@@ -168,9 +168,10 @@ class UsersController < ApplicationController
         puts "#{language.name} saved"
       end
 
-      language_listing = Languagelisting.find_or_initialize_by(
+      language_listing = LanguageListing.find_or_initialize_by(
         language_id: language.id,
-        repository_id: current_repo.id
+        repository_id: current_repo.id,
+        count: count
       )
 
       if language_listing.save
