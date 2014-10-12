@@ -36,7 +36,6 @@ class User < ActiveRecord::Base
   end
 
   def average_score
-
     if reviews_received.count != 0
       reviews_received.sum(:score).to_f/reviews_received.count
     else
