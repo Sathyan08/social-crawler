@@ -6,7 +6,7 @@
 </h1>
 
 <h3>Collaborators</h3>
-<ol>
+<ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-3">
   <% @user.collaborators.each do |col| %>
     <li>
       <% unless col.git_avatar.nil?%>
@@ -29,7 +29,7 @@
       <% end %>
     </li>
   <% end %>
-</ol>
+</ul>
 
 
 <% if @user.highlighted_repos.length > 0 %>
