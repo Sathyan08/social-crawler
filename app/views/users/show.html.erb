@@ -4,6 +4,7 @@
   <% end %>
   <%= @user.gitname %>
 </h1>
+<%= link_to "#{@user.gitname}'s Repositories", user_repositories_path(@user) %>
 
 <h3>Collaborators</h3>
 <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-3">
