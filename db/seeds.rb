@@ -5,3 +5,26 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+def make_review(user, reviewee, score)
+  review = Review.new
+  review.user = user
+  review.reviewee = reviewee
+  review.score = score
+  review.category = "1"
+  review.save!
+
+  reviewee.p_linked = true
+  reviewee.save!
+end
+
+
+paragon_user = User.find_by(gitname: "dpickett")
+
+paragon_user.paragon = true
+paragon_user.p_linked = true
+paragon_user.save!
+
+paragon_user.collaborators.each do |col|
+  score = rand(2) + 7
+  make_review(paragon_user, col, score)
+end

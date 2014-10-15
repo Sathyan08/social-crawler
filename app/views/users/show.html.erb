@@ -4,6 +4,13 @@
   <% end %>
   <%= @user.gitname %>
 </h1>
+
+<% if !@user.weighted_score.nil? %>
+  <p>Weighted Score: <%= @user.weighted_score %></p>
+<% else %>
+  <p>Weighted Score: This user has not been indexed yet!</p>
+<% end %>
+
 <%= link_to "#{@user.gitname}'s Repositories", user_repositories_path(@user) %>
 
 <h3>Collaborators</h3>
@@ -21,10 +28,15 @@
         <span>No Reviews Yet!</span>
       <% end %><br>
       Number of Reviews: <%= col.reviews_received.count %>
+      <% if !col.weighted_score.nil? %>
+        <p>Weighted Score: <%= col.weighted_score %></p>
+      <% else %>
+        <p>Weighted Score: This user has not been indexed yet!</p>
+    <% end %>
 
       <% if @user == current_user %>
         <%= simple_form_for [col, current_user.review_for(col)] do |f| %>
-          <%= f.input :score, :collection => 1..5 %>
+          <%= f.input :score, :collection => 1..10 %>
           <%= f.button :submit, class: "button radius" %>
         <% end %>
       <% end %>
@@ -32,14 +44,12 @@
   <% end %>
 </ul>
 
-
-<% if @user.highlighted_repos.length > 0 %>
-  <h1>Highlighted Repos</h1>
-
-    <ol>
-      <% @user.highlighted_repos.each do |repo| %>
-        <li><%= repo.name %></li>
-      <% end %>
-    </ol>
+<% unless @user.highlighted.empty? %>
+  <% @user.highlighted.each do |collab| %>
+    <h3><%= collab.repository.name %></h3>
+    <h4><%= @user.gitname %>'s Role on <%= collab.repository.name %></h4>
+    <p><%= collab.role %></p>
+    <h4>Why <%= @user.gitname %> chose to highlight this repository</p>
+    <p><%= collab.description %></h4>
+  <% end %>
 <% end %>
-

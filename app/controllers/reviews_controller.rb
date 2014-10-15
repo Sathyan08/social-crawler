@@ -6,6 +6,10 @@ class ReviewsController < ApplicationController
     @review.reviewee = User.find(params[:user_id])
     @review.category = "1"
 
+    if current_user.p_linked
+      @review.reviewee.p_linked = true
+    end
+
     if @review.save
       redirect_to current_user, notice: "Review Saved!"
     else

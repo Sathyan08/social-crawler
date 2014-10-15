@@ -11,16 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141014142139) do
+ActiveRecord::Schema.define(version: 20141015200514) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "collaborations", force: true do |t|
-    t.integer  "user_id",       null: false
-    t.integer  "repository_id", null: false
+    t.integer  "user_id",                       null: false
+    t.integer  "repository_id",                 null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "highlighted",   default: false
+    t.string   "role"
+    t.text     "description"
   end
 
   create_table "language_listings", force: true do |t|
@@ -68,6 +71,7 @@ ActiveRecord::Schema.define(version: 20141014142139) do
     t.boolean  "p_linked",       default: false
     t.boolean  "logged",         default: false
     t.boolean  "stack_overflow", default: false
+    t.boolean  "paragon",        default: false
   end
 
 end

@@ -1,0 +1,20 @@
+<h1><%= @collaboration.repository.name %></h1>
+
+<h3>Collaborators</h3>
+
+<ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-3">
+  <% @collaboration.repository.users.each do |user| %>
+    <li><%= image_tag user.git_avatar, height: '64', width: '64' %>
+      <p><%= link_to user.gitname, user_path(user) %></p>
+    </li>
+  <% end %>
+</ul>
+
+<h3>Making Featured Repos</h3>
+
+<p>You can use this page to highlight the repos that you think best demonstrate your work.  You can describe what your role was on the project, and you can describe why that repo best describes your unique skills.</p>
+
+<p>If you want to make <%= @collaboration.repository.name %> one of your featured repos, click on the link below!</p>
+
+<%= link_to "Make #{@collaboration.repository.name} a featured repo!",
+  edit_collaboration_path(@collaboration) %>

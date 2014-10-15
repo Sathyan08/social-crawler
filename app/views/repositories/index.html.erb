@@ -1,12 +1,18 @@
 <h1><%= @user.gitname %>'s Repositories</h1>
 
 <ol>
-  <% @user.repositories.each do |repo| %>
+  <% @user.collaborations.each do |collab| %>
 
-    <h3><%= repo.name %></h3>
+    <% if @user == current_user %>
+      <h3><%= link_to collab.repository.name, collaboration_path(collab) %></h3>
+      <p><%= link_to "Click Here to Make #{collab.repository.name} a Featured Repository", collaboration_path(collab) %></p>
+    <% else %>
+      <h3><%= collab.repository.name %></h3>
+    <% end %>
+
     <h5>Collaborators</h5>
     <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-3">
-      <% repo.users.each do |user| %>
+      <% collab.repository.users.each do |user| %>
         <li><%= image_tag user.git_avatar, height: '64', width: '64' %>
           <p><%= link_to user.gitname, user_path(user) %></p>
         </li>
