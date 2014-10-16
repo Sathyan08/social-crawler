@@ -74,8 +74,15 @@ class User < ActiveRecord::Base
     review_info = {}
 
     reviews = Review.all
+    reviews_from_plinked = []
 
-    reviews.each do |review|
+    reviews.each do |rev|
+      if rev.user.p_linked
+        reviews_from_plinked << rev
+      end
+    end
+
+    reviews_from_plinked.each do |review|
       if review_info.has_key?(review.reviewee.id)
         review_info[review.reviewee_id] << { user_id: review.user_id, score: review.score }
       else
