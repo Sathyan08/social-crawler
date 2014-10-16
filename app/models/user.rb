@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
 
         reviews.each do |review|
           user_weight = user_weights[review[:user_id]]
-          power = user_weight.to_i
+          power = user_weight.to_i - 1
 
           total_score += user_weight * review[:score] * (2 ** power)
           divisor += user_weight * (2 ** power)
