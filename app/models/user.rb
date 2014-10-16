@@ -24,12 +24,14 @@ class User < ActiveRecord::Base
 
     updated_weights.each do |user_id, weight|
       user_sought = User.find(user_id)
-      user_sought.weight = weight
 
-      unless user_sought.paragon #ensures that the paragon is always a 10
+      if !user_sought.paragon #ensures that the paragon is always a 10
+        user_sought.weight = weight
+        user_sought.save!
+      else
+        user_sought.weight = 10.0
         user_sought.save!
       end
-
     end
   end
 
