@@ -31,4 +31,10 @@ paragon_user.paragon = true
 paragon_user.p_linked = true
 paragon_user.save!
 
+review_all_collaborators(paragon, 3, 6)
+
+paragon.collaborators.each do |col|
+  review_all_collaborators(col, 7, 3)
+end
+
 User.save_updated_weights
