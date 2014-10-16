@@ -5,8 +5,10 @@
   <%= @user.gitname %>
 </h1>
 
-<% if !@user.weighted_score.nil? %>
-  <p>Weighted Score: <%= @user.weighted_score %></p>
+<% if @user.paragon %>
+  <p>Paragon</p>
+<% elsif @user.p_linked %>
+  <p>Weighted Score: <%= @user.weight %></p>
 <% else %>
   <p>Weighted Score: This user has not been indexed yet!</p>
 <% end %>
@@ -28,8 +30,11 @@
         <span>No Reviews Yet!</span>
       <% end %><br>
       Number of Reviews: <%= col.reviews_received.count %>
-      <% if !col.weighted_score.nil? %>
-        <p>Weighted Score: <%= col.weighted_score %></p>
+
+      <% if col.paragon %>
+        <p>Paragon</p>
+      <% elsif col.p_linked %>
+        <p>Weighted Score: <%= col.weight %></p>
       <% else %>
         <p>Weighted Score: This user has not been indexed yet!</p>
     <% end %>

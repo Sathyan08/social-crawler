@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 20141016143649) do
     t.boolean  "logged",         default: false
     t.boolean  "stack_overflow", default: false
     t.boolean  "paragon",        default: false
-    t.integer  "weight",         default: 5
+    t.float    "weight",         default: 5.0
   end
 
 end
