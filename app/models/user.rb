@@ -30,19 +30,6 @@ class User < ActiveRecord::Base
   end
 
   def self.calculate_weighted_scores
-    # user 1 rated user 2 as a 7.0
-    # user 2 rated user 1 as a 9.0
-    # user 2 rated user 3 as a 4.0
-    # user 3 rated user 1 as a 10.0
-
-    # user_weights = User.pluck(:id).reduce({}) { |hash, id| hash.merge(id => 5.0) }
-
-
-    # user_reviews = {
-    #   2 => [{ reviewee_id: 1, score: 7.0 }],
-    #   1 => [{ reviewee_id: 2, score: 9.0 }, { reviewee_id: 3, score: 10.0 }],
-    #   3 => [{ reviewee_id: 2, score: 4.0 }]
-    # }
 
     user_weights = User.get_weights
     user_reviews = User.get_review_information
@@ -99,7 +86,7 @@ class User < ActiveRecord::Base
     users = User.all
 
     users.each do |user|
-      weight_info[user.id] = 5.0
+      weight_info[user.id] = user.weight
     end
 
     weight_info
