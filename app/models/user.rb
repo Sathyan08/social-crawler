@@ -25,7 +25,11 @@ class User < ActiveRecord::Base
     updated_weights.each do |user_id, weight|
       user_sought = User.find(user_id)
       user_sought.weight = weight
-      user_sought.save!
+
+      unless user_sought.paragon #ensures that the paragon is always a 10
+        user_sought.save!
+      end
+
     end
   end
 
@@ -39,16 +43,17 @@ class User < ActiveRecord::Base
 
       user_reviews.each do |user_id, reviews|
         total_score = 0.0
-        total_weight = 0.0
+        divisor = 0.0
 
         reviews.each do |review|
           user_weight = user_weights[review[:user_id]]
+          power = user_weight.to_i
 
-          total_weight += user_weight
-          total_score += user_weight * review[:score]
+          total_score += user_weight * review[:score] * (2 ** power)
+          divisor += user_weight * (2 ** power)
         end
 
-        updated_weights[user_id] = total_score / total_weight
+        updated_weights[user_id] = total_score / divisor
       end
 
       user_weights = updated_weights

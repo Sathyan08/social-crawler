@@ -29,6 +29,7 @@ paragon_user = User.find_by(gitname: "dpickett")
 
 paragon_user.paragon = true
 paragon_user.p_linked = true
+paragon.weight = 10
 paragon_user.save!
 
 review_all_collaborators(paragon, 3, 6)
