@@ -17,6 +17,13 @@ def make_review(user, reviewee, score)
   reviewee.save!
 end
 
+def review_all_collaborators(user, range, baseline)
+  user.collaborators.each do |col|
+    score = rand(range) + baseline
+    make_review(user, col, score)
+  end
+end
+
 
 paragon_user = User.find_by(gitname: "dpickett")
 
@@ -24,7 +31,4 @@ paragon_user.paragon = true
 paragon_user.p_linked = true
 paragon_user.save!
 
-paragon_user.collaborators.each do |col|
-  score = rand(2) + 7
-  make_review(paragon_user, col, score)
-end
+User.save_updated_weights

@@ -19,6 +19,85 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.save_updated_weights
+    updated_weights = User.calculate_weighted_scores
+
+    updated_weights.each do |user_id, weight|
+      user_sought = User.find(user_id)
+      user_sought.weight = weight
+      user_sought.save!
+    end
+  end
+
+  def self.calculate_weighted_scores
+    # user 1 rated user 2 as a 7.0
+    # user 2 rated user 1 as a 9.0
+    # user 2 rated user 3 as a 4.0
+    # user 3 rated user 1 as a 10.0
+
+    # user_weights = User.pluck(:id).reduce({}) { |hash, id| hash.merge(id => 5.0) }
+
+
+    # user_reviews = {
+    #   2 => [{ reviewee_id: 1, score: 7.0 }],
+    #   1 => [{ reviewee_id: 2, score: 9.0 }, { reviewee_id: 3, score: 10.0 }],
+    #   3 => [{ reviewee_id: 2, score: 4.0 }]
+    # }
+
+    user_weights = User.get_weights
+    user_reviews = User.get_review_information
+
+    100.times do |i|
+      updated_weights = user_weights.dup
+
+      user_reviews.each do |user_id, reviews|
+        total_score = 0.0
+        total_weight = 0.0
+
+        reviews.each do |review|
+          user_weight = user_weights[review[:user_id]]
+
+          total_weight += user_weight
+          total_score += user_weight * review[:score]
+        end
+
+        updated_weights[user_id] = total_score / total_weight
+      end
+
+      user_weights = updated_weights
+    end
+
+    user_weights
+  end
+
+  def self.get_review_information
+    review_info = {}
+
+    reviews = Review.all
+
+    reviews.each do |review|
+      if review_info.has_key?(review.reviewee.id)
+        review_info[review.reviewee_id] << { user_id: review.user_id, score: review.score }
+      else
+        review_info[review.reviewee_id] = [{ user_id: review.user_id, score: review.score }]
+      end
+    end
+
+    review_info
+  end
+
+  def self.get_weights
+    weight_info = {}
+
+    users = User.all
+
+    users.each do |user|
+      weight_info[user.id] = 5.0
+    end
+
+    weight_info
+  end
+
   def review_for(other_user)
     reviews_written.find_by(reviewee: other_user) || Review.new
   end
@@ -55,46 +134,5 @@ class User < ActiveRecord::Base
     end
 
     collaborators.uniq
-  end
-
-  def weighted_score
-
-    if self.paragon
-      return 10
-    elsif !self.p_linked
-      return nil
-    else
-      linked_reviews = get_linked
-      weighted_scores = get_weighted(linked_reviews)
-    end
-
-    weighted_sum = weighted_scores.inject { |sum, n| sum + n }
-    weighted_sum.to_f/weighted_scores.length
-  end
-
-  def get_linked
-    linked_reviews = []
-
-    reviews_received.each do |review_received|
-      if review_received.user.p_linked
-        linked_reviews << review_received
-      end
-    end
-
-    linked_reviews
-  end
-
-  def get_weighted(linked_reviews)
-    weighted = []
-
-    linked_reviews.each do |linked_review|
-      power = linked_review.user.weighted_score.to_i - 1
-
-      (2 ** power).times do
-        weighted << linked_review.score
-      end
-    end
-
-    weighted
   end
 end
