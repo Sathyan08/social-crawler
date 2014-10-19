@@ -8,10 +8,22 @@
   margin-bottom: 5%;
 }
 
+.user-card{
+  background: #F0F0F5;
+}
+
+.user-card:hover{
+  background: #E0E0EA;
+}
+
 .repo_listing {
   background: #F0F0F5;
   margin-bottom: 1%;
   padding: 3%;
+}
+
+.repo_listing:hover{
+  background: #E0E0EA;
 }
 
 .top-bar {
