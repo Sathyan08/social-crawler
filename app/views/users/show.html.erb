@@ -5,56 +5,68 @@
   <%= @user.gitname %>
 </h1>
 
-<% if @user.paragon %>
-  <p>Paragon</p>
-<% elsif @user.p_linked %>
-  <p>Weighted Score: <%= @user.display_weight %></p>
+
+<% if @user.reviews_received.count > 0 %>
+  <p>Weighted Score: <%= @user.display_weight %><br>
+  Average Score: <%= @user.display_average %></p>
 <% else %>
-  <p>Weighted Score: This user has not been indexed yet!</p>
+  <p>Weighted Score: This user has not been reviewed yet!<br>
+  Average Score: <%= @user.display_average %></p>
 <% end %>
+
+
 
 <%= link_to "#{@user.gitname}'s Repositories", user_repositories_path(@user) %>
 
 <h3>Collaborators</h3>
-<ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-3">
-  <% @user.collaborators.each do |col| %>
-    <li>
-      <% unless col.git_avatar.nil?%>
-        <%= image_tag col.git_avatar, height: '64', width: '64' %><br>
-      <% end %>
-      <%= link_to col.gitname, user_path(col) %><br>
-      Average Score:
-      <% if col.reviews_received.count != 0%>
-        <%= col.average_score %>
-      <% else %>
-        <span>No Reviews Yet!</span>
-      <% end %><br>
-      Number of Reviews: <%= col.reviews_received.count %>
 
-      <% if col.paragon %>
-        <p>Paragon</p>
-      <% elsif col.p_linked %>
-        <p>Weighted Score: <%= col.display_weight %></p>
-      <% else %>
-        <p>Weighted Score: This user has not been indexed yet!</p>
-    <% end %>
-
-      <% if @user == current_user %>
-        <%= simple_form_for [col, current_user.review_for(col)] do |f| %>
-          <%= f.input :score, :collection => 1..10 %>
-          <%= f.button :submit, class: "button radius" %>
+<div id="collaborators">
+  <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-3">
+    <% @user.collaborators.each do |col| %>
+      <li class="user-card">
+        <% unless col.git_avatar.nil?%>
+          <%= image_tag col.git_avatar, height: '64', width: '64' %><br>
         <% end %>
+        <%= link_to col.gitname, user_path(col) %><br>
+        Average Score:
+        <% if col.reviews_received.count != 0%>
+          <%= col.display_average %>
+        <% else %>
+          <span>No Reviews Yet!</span>
+        <% end %><br>
+        Number of Reviews: <%= col.reviews_received.count %>
+
+        <% if col.paragon %>
+          <p>Paragon</p>
+        <% elsif col.p_linked %>
+          <p>Weighted Score: <%= col.display_weight %></p>
+        <% else %>
+          <p>Weighted Score: This user has not been indexed yet!</p>
       <% end %>
-    </li>
-  <% end %>
-</ul>
+
+        <% if @user == current_user %>
+          <%= simple_form_for [col, current_user.review_for(col)] do |f| %>
+            <%= f.input :score, :collection => 1..10 %>
+            <%= f.button :submit, class: "button radius" %>
+          <% end %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
 
 <% unless @user.highlighted.empty? %>
-  <% @user.highlighted.each do |collab| %>
-    <h3><%= collab.repository.name %></h3>
-    <h4><%= @user.gitname %>'s Role on <%= collab.repository.name %></h4>
-    <p><%= collab.role %></p>
-    <h4>Why <%= @user.gitname %> chose to highlight this repository</p>
-    <p><%= collab.description %></h4>
-  <% end %>
+  <h3><%= @user.gitname %>'s Highlighted Repositories</h3>
+
+
+    <% @user.highlighted.each do |collab| %>
+      <li class="repo_listing">
+        <h3><%= collab.repository.name %></h3>
+        <h4><%= @user.gitname %>'s Role on <%= collab.repository.name %></h4>
+        <p><%= collab.role %></p>
+        <h4>Why <%= @user.gitname %> chose to highlight this repository</h4>
+        <p><%= collab.description %></p>
+      </li>
+    <% end %>
+
 <% end %>

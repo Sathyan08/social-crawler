@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
 
         reviews.each do |review|
           user_weight = user_weights[review[:user_id]]
-          power = user_weight.to_i - 1
+          power = user_weight.to_i
 
           total_score += user_weight * review[:score] * (2 ** power)
           divisor += user_weight * (2 ** power)
@@ -68,15 +68,8 @@ class User < ActiveRecord::Base
     review_info = {}
 
     reviews = Review.all
-    reviews_from_plinked = []
 
-    reviews.each do |rev|
-      if rev.user.p_linked
-        reviews_from_plinked << rev
-      end
-    end
-
-    reviews_from_plinked.each do |review|
+    reviews.each do |review|
       if review_info.has_key?(review.reviewee.id)
         review_info[review.reviewee_id] << { user_id: review.user_id, score: review.score }
       else
@@ -124,7 +117,16 @@ class User < ActiveRecord::Base
   end
 
   def display_weight
-    "#{sprintf('%.2f'%self.weight)}"
+    "#{ sprintf('%.2f'%self.weight) }"
+  end
+
+  def display_average
+
+    if self.average_score.nil?
+      "This user has not been reviewed yet!"
+    else
+      "#{ sprintf('%.2f'%self.average_score) }"
+    end
   end
 
   def collaborators
