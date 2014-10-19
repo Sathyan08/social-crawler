@@ -123,6 +123,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def display_weight
+    "#{sprintf('%.2f'%self.weight)}"
+  end
+
   def collaborators
     collaborators = []
 

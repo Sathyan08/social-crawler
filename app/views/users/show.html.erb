@@ -8,7 +8,7 @@
 <% if @user.paragon %>
   <p>Paragon</p>
 <% elsif @user.p_linked %>
-  <p>Weighted Score: <%= @user.weight %></p>
+  <p>Weighted Score: <%= @user.display_weight %></p>
 <% else %>
   <p>Weighted Score: This user has not been indexed yet!</p>
 <% end %>
@@ -34,7 +34,7 @@
       <% if col.paragon %>
         <p>Paragon</p>
       <% elsif col.p_linked %>
-        <p>Weighted Score: <%= col.weight %></p>
+        <p>Weighted Score: <%= col.display_weight %></p>
       <% else %>
         <p>Weighted Score: This user has not been indexed yet!</p>
     <% end %>
