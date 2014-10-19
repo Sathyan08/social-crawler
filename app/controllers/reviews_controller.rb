@@ -11,6 +11,7 @@ class ReviewsController < ApplicationController
     end
 
     if @review.save
+      User.save_updated_weights #un-comment to allow recalculation on review
       redirect_to current_user, notice: "Review Saved!"
     else
       redirect_to current_user, notice: "Review Not Saved! Please Resubmit"
@@ -21,14 +22,11 @@ class ReviewsController < ApplicationController
     @review = Review.find_by(reviewee_id: params[:user_id])
 
     if @review.update(review_params)
+      User.save_updated_weights #un-comment to allow recalculation on review update
       redirect_to current_user, notice: "Successfully Updated Review"
     else
       redirect_to current_user, notice: "Review Not Updated! Please Resubmit."
     end
-  end
-
-  def destroy
-
   end
 
   private
@@ -42,10 +40,4 @@ class ReviewsController < ApplicationController
   end
 
 end
-  #  t.integer  "user_id",     null: false
-  #   t.integer  "reviewee_id", null: false
-  #   t.string   "type",        null: false
-  #   t.integer  "score",       null: false
-  #   t.datetime "created_at"
-  #   t.datetime "updated_at"
-  # end
+

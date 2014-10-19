@@ -4,6 +4,12 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "sessions#create"
   get "/signout", to: "sessions#destroy", as: :signout
 
+  get "/scale" => "static_pages#scale"
+  get "/weighing" => "static_pages#weighing"
+
+
+  get "/about" => "static_pages#about"
+
   resources :sessions, only: [:new, :create, :destroy]
   resources :collaborations, only: [:show, :edit, :update]
 

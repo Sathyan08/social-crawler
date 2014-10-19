@@ -1,31 +1,35 @@
-<h1>
-  <% unless @user.git_avatar.nil? %>
-    <%= image_tag @user.git_avatar, height: '64', width: '64' %>
-  <% end %>
-  <%= @user.gitname %>
-</h1>
+<div class="row">
+  <div class="large-5 columns">
+    <h1>
+      <% unless @user.git_avatar.nil? %>
+        <%= image_tag @user.git_avatar, height: '128', width: '128' %>
+      <% end %>
+      <%= @user.gitname %>
+    </h1>
 
 
-<% if @user.reviews_received.count > 0 %>
-  <p>Weighted Score: <%= @user.display_weight %><br>
-  Average Score: <%= @user.display_average %></p>
-<% else %>
-  <p>Weighted Score: This user has not been reviewed yet!<br>
-  Average Score: <%= @user.display_average %></p>
-<% end %>
+    <% if @user.reviews_received.count > 0 %>
+      <p>Weighted Score: <%= @user.display_weight %><br>
+      Average Score: <%= @user.display_average %></p>
+    <% else %>
+      <p>Weighted Score: This user has not been reviewed yet!<br>
+      Average Score: <%= @user.display_average %></p>
+    <% end %>
+  </div>
+</div>
 
 
 
 <%= link_to "#{@user.gitname}'s Repositories", user_repositories_path(@user) %>
 
-<h3>Collaborators</h3>
+<h3 id="collab_headline">Collaborators</h3>
 
 <div id="collaborators">
   <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-3">
     <% @user.collaborators.each do |col| %>
       <li class="user-card">
         <% unless col.git_avatar.nil?%>
-          <%= image_tag col.git_avatar, height: '64', width: '64' %><br>
+          <%= image_tag col.git_avatar, height: '128', width: '128' %><br>
         <% end %>
         <%= link_to col.gitname, user_path(col) %><br>
         Average Score:
@@ -41,7 +45,7 @@
         <% elsif col.p_linked %>
           <p>Weighted Score: <%= col.display_weight %></p>
         <% else %>
-          <p>Weighted Score: This user has not been indexed yet!</p>
+          <p>Weighted Score: This user has not been reviewed yet!</p>
       <% end %>
 
         <% if @user == current_user %>
@@ -61,11 +65,11 @@
 
     <% @user.highlighted.each do |collab| %>
       <li class="repo_listing">
-        <h3><%= collab.repository.name %></h3>
-        <h4><%= @user.gitname %>'s Role on <%= collab.repository.name %></h4>
-        <p><%= collab.role %></p>
-        <h4>Why <%= @user.gitname %> chose to highlight this repository</h4>
-        <p><%= collab.description %></p>
+        <h3 class="repo_part"><%= collab.repository.name %></h3>
+        <h4 class="repo_part"><%= @user.gitname %>'s Role on <%= collab.repository.name %></h4>
+        <p class="repo_part"><%= collab.role %></p>
+        <h4 class="repo_part">Why <%= @user.gitname %> chose to highlight this repository</h4>
+        <p class="repo_part"><%= collab.description %></p>
       </li>
     <% end %>
 

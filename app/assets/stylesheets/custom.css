@@ -1,3 +1,7 @@
+#collab_headline {
+  margin-top: 3%;
+}
+
 #collaborators {
   background: #F0F0F5;
   padding: 3%;
@@ -8,6 +12,26 @@
   background: #F0F0F5;
   margin-bottom: 1%;
   padding: 3%;
+}
+
+.top-bar {
+  margin-bottom: 1%;
+}
+
+.repo_part {
+  margin-bottom: 3%;
+}
+
+.about {
+  margin-bottom: 7%
+}
+
+.scale {
+  margin-bottom: 3%;
+}
+
+#weighing_header {
+  margin-bottom: 3%;
 }
 
 
