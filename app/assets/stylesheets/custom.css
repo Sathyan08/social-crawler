@@ -50,6 +50,16 @@
   height: 5%;
   background: black;
   margin-top: 3%;
+  float: bottom;
 }
+
+.info {
+  background: #F0F0F5;
+  padding: 5%;
+}
+
+/*#weighing_info{
+  min-height: 1000px;
+}*/
 
 

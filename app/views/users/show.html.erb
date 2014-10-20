@@ -16,6 +16,9 @@
       Average Score: <%= @user.display_average %></p>
     <% end %>
   </div>
+
+  <div class="large-5 columns" id="display_data">
+  </div>
 </div>
 
 
@@ -27,34 +30,37 @@
 <div id="collaborators">
   <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-3">
     <% @user.collaborators.each do |col| %>
-      <li class="user-card">
-        <% unless col.git_avatar.nil?%>
-          <%= image_tag col.git_avatar, height: '128', width: '128' %><br>
-        <% end %>
-        <%= link_to col.gitname, user_path(col) %><br>
-        Average Score:
-        <% if col.reviews_received.count != 0%>
-          <%= col.display_average %>
-        <% else %>
-          <span>No Reviews Yet!</span>
-        <% end %><br>
-        Number of Reviews: <%= col.reviews_received.count %>
 
-        <% if col.paragon %>
-          <p>Paragon</p>
-        <% elsif col.p_linked %>
-          <p>Weighted Score: <%= col.display_weight %></p>
-        <% else %>
-          <p>Weighted Score: This user has not been reviewed yet!</p>
-      <% end %>
-
-        <% if @user == current_user %>
-          <%= simple_form_for [col, current_user.review_for(col)] do |f| %>
-            <%= f.input :score, :collection => 1..10 %>
-            <%= f.button :submit, class: "button radius" %>
+        <li class="user-card">
+          <% unless col.git_avatar.nil?%>
+            <%= image_tag col.git_avatar, height: '128', width: '128' %><br>
           <% end %>
+          <%= link_to col.gitname, user_path(col) %><br>
+          Average Score:
+          <% if col.reviews_received.count != 0%>
+            <%= col.display_average %>
+          <% else %>
+            <span>No Reviews Yet!</span>
+          <% end %><br>
+          Number of Reviews: <%= col.reviews_received.count %>
+
+          <% if col.paragon %>
+            <p>Paragon</p>
+          <% elsif col.p_linked %>
+            <p>Weighted Score: <%= col.display_weight %></p>
+          <% else %>
+            <p>Weighted Score: This user has not been reviewed yet!</p>
         <% end %>
-      </li>
+
+          <% if @user == current_user %>
+            <%= simple_form_for [col, current_user.review_for(col)] do |f| %>
+              <%= f.input :score, :collection => 1..10 %>
+              <%= f.button :submit, class: "button radius" %>
+            <% end %>
+          <% end %>
+        </li>
+
+
     <% end %>
   </ul>
 </div>
