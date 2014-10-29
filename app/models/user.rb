@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :reviews_received, class_name: "Review", foreign_key: :reviewee_id#, class_name: :review, foreign_key: :reviewee_id
   has_many :reviewers, through: :reviews_received, source: :user
 
+  validates :gitname, presence: true
+
   def self.create_with_omniauth(auth)
     create! do |user|
       user.provider = auth["provider"]
@@ -108,6 +110,22 @@ class User < ActiveRecord::Base
     highlighted
   end
 
+  def language_info
+    lang_info = {}
+
+    repositories.each do |repo|
+      repo.language_listings.each do |lang_listing|
+        if lang_info.has_key?(lang_listing.language.name)
+          lang_info[lang_listing.language.name] += lang_listing.count
+        else
+          lang_info[lang_listing.language.name] = lang_listing.count
+        end
+      end
+    end
+
+    lang_info
+  end
+
   def average_score
     if reviews_received.count != 0
       reviews_received.sum(:score).to_f/reviews_received.count
@@ -128,6 +146,12 @@ class User < ActiveRecord::Base
       "#{ sprintf('%.2f'%self.average_score) }"
     end
   end
+
+  # def update_individual_score
+
+  #   reviews_received
+
+  # end
 
   def collaborators
     collaborators = []

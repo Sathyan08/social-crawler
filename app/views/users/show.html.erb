@@ -3,7 +3,7 @@
     <h1>
       <% unless @user.git_avatar.nil? %>
         <%= image_tag @user.git_avatar, height: '128', width: '128' %>
-      <% end %>
+      <% end %><br>
       <%= @user.gitname %>
     </h1>
 

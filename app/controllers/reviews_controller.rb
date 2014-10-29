@@ -23,7 +23,9 @@ class ReviewsController < ApplicationController
 
     if @review.update(review_params)
       User.save_updated_weights #un-comment to allow recalculation on review update
-      redirect_to current_user, notice: "Successfully Updated Review"
+      @weighted_score = @review.reviewee.weighted_display
+      render json: @weighted_score
+      # redirect_to current_user, notice: "Successfully Updated Review"
     else
       redirect_to current_user, notice: "Review Not Updated! Please Resubmit."
     end

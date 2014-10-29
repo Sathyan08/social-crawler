@@ -8,6 +8,8 @@ class UsersController < ApplicationController
       @user.synced = true
       @user.save
     end
+
+    binding.pry
   end
 
   private
